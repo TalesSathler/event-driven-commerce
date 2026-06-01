@@ -64,10 +64,12 @@ export class ProductFormComponent {
     if (!this.name().trim()) {
       errors['name'] = 'Name is required';
     }
-    if (this.price() === null || this.price() <= 0) {
+    const price = this.price();
+    if (price === null || price <= 0) {
       errors['price'] = 'Price must be positive';
     }
-    if (this.quantity() !== null && this.quantity() < 0) {
+    const quantity = this.quantity();
+    if (quantity !== null && quantity < 0) {
       errors['quantity'] = 'Quantity must be non-negative';
     }
 
@@ -81,8 +83,8 @@ export class ProductFormComponent {
     const data = {
       name: this.name().trim(),
       description: this.description().trim(),
-      price: this.price() as number,
-      quantity: this.quantity() ?? 0,
+      price: price as number,
+      quantity: quantity ?? 0,
     };
 
     const request = this.isEdit()
