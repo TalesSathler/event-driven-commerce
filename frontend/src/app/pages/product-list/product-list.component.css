@@ -1,0 +1,25 @@
+.product-card {
+  opacity: 0;
+  animation: fade-in-up 0.4s ease both;
+}
+.product-card:nth-child(1) { animation-delay: 0ms; }
+.product-card:nth-child(2) { animation-delay: 50ms; }
+.product-card:nth-child(3) { animation-delay: 100ms; }
+.product-card:nth-child(4) { animation-delay: 150ms; }
+.product-card:nth-child(5) { animation-delay: 200ms; }
+.product-card:nth-child(6) { animation-delay: 250ms; }
+.product-card:nth-child(7) { animation-delay: 300ms; }
+.product-card:nth-child(8) { animation-delay: 350ms; }
+.product-card:nth-child(9) { animation-delay: 400ms; }
+
+.product-card-inner {
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.product-card:hover .product-card-inner {
+  transform: translateY(-2px);
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

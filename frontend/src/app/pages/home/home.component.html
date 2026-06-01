@@ -1,0 +1,640 @@
+<div class="min-h-screen bg-background">
+  <!-- Navbar -->
+  <nav class="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-sm">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+      <span class="text-sm font-semibold tracking-tight">Event-Driven Commerce</span>
+      <div class="flex items-center gap-6">
+        <a href="#overview" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Overview</a>
+        <a href="#stack" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Stack</a>
+        <a href="#architecture" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Architecture</a>
+        <a href="#roadmap" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Roadmap</a>
+        <a href="#docs" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Docs</a>
+        <a href="#getting-started" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Getting Started</a>
+        @if (auth.isAuthenticated) {
+          <span class="text-sm text-muted-foreground">{{ auth.name }}</span>
+          <a routerLink="/products" z-button zType="ghost">Products</a>
+        } @else {
+          <a routerLink="/login" z-button zType="ghost">Sign In</a>
+        }
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="overview" class="relative overflow-hidden px-4 py-24 md:py-36">
+    <div class="absolute inset-0 opacity-[0.1] dark:opacity-[0.15]" style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Ccircle cx='20' cy='20' r='3' fill='%236366f1' opacity='0.4'/%3E%3Ccircle cx='60' cy='10' r='3' fill='%236366f1' opacity='0.4'/%3E%3Ccircle cx='100' cy='20' r='3' fill='%236366f1' opacity='0.4'/%3E%3Ccircle cx='10' cy='60' r='3' fill='%236366f1' opacity='0.4'/%3E%3Ccircle cx='60' cy='60' r='4' fill='%236366f1' opacity='0.6'/%3E%3Ccircle cx='110' cy='60' r='3' fill='%236366f1' opacity='0.4'/%3E%3Ccircle cx='20' cy='100' r='3' fill='%236366f1' opacity='0.4'/%3E%3Ccircle cx='60' cy='110' r='3' fill='%236366f1' opacity='0.4'/%3E%3Ccircle cx='100' cy='100' r='3' fill='%236366f1' opacity='0.4'/%3E%3Cline x1='20' y1='20' x2='60' y2='10' stroke='%236366f1' stroke-width='0.5' opacity='0.2'/%3E%3Cline x1='60' y1='10' x2='100' y2='20' stroke='%236366f1' stroke-width='0.5' opacity='0.2'/%3E%3Cline x1='20' y1='20' x2='10' y2='60' stroke='%236366f1' stroke-width='0.5' opacity='0.2'/%3E%3Cline x1='100' y1='20' x2='110' y2='60' stroke='%236366f1' stroke-width='0.5' opacity='0.2'/%3E%3Cline x1='10' y1='60' x2='20' y2='100' stroke='%236366f1' stroke-width='0.5' opacity='0.2'/%3E%3Cline x1='110' y1='60' x2='100' y2='100' stroke='%236366f1' stroke-width='0.5' opacity='0.2'/%3E%3Cline x1='20' y1='100' x2='60' y2='110' stroke='%236366f1' stroke-width='0.5' opacity='0.2'/%3E%3Cline x1='60' y1='110' x2='100' y2='100' stroke='%236366f1' stroke-width='0.5' opacity='0.2'/%3E%3Cline x1='20' y1='20' x2='60' y2='60' stroke='%236366f1' stroke-width='0.5' opacity='0.15'/%3E%3Cline x1='100' y1='20' x2='60' y2='60' stroke='%236366f1' stroke-width='0.5' opacity='0.15'/%3E%3Cline x1='20' y1='100' x2='60' y2='60' stroke='%236366f1' stroke-width='0.5' opacity='0.15'/%3E%3Cline x1='100' y1='100' x2='60' y2='60' stroke='%236366f1' stroke-width='0.5' opacity='0.15'/%3E%3C/svg%3E&quot;); background-size: 120px 120px;"></div>
+    <div class="hero-glow w-96 h-96 bg-brand/20 -top-24 -left-24 dark:bg-brand/10" style="animation-delay: 0s;"></div>
+    <div class="hero-glow w-80 h-80 bg-purple-400/15 top-12 right-0 dark:bg-purple-400/8" style="animation-delay: 3s;"></div>
+    <div class="hero-glow w-64 h-64 bg-cyan-400/10 bottom-0 left-1/3 dark:bg-cyan-400/5" style="animation-delay: 6s;"></div>
+
+    <!-- Event stream visual -->
+    <div class="event-stream top-12 right-[15%] w-32">
+      <div class="event-stream-line mb-2"></div>
+      <div class="event-stream-line mb-2"></div>
+      <div class="event-stream-line"></div>
+    </div>
+    <div class="event-stream bottom-20 left-[10%] w-24">
+      <div class="event-stream-line mb-1.5"></div>
+      <div class="event-stream-line"></div>
+    </div>
+
+    <!-- Event particles -->
+    <div class="event-particle t1 top-[20%] left-[12%]"></div>
+    <div class="event-particle t2 top-[25%] left-[15%]"></div>
+    <div class="event-particle t3 top-[30%] left-[10%]"></div>
+    <div class="event-particle t4 top-[22%] left-[18%]"></div>
+    <div class="event-particle event-particle-sm t5 bottom-[30%] right-[12%]"></div>
+    <div class="event-particle event-particle-sm t6 bottom-[35%] right-[15%]"></div>
+    <div class="event-particle event-particle-sm t7 bottom-[28%] right-[18%]"></div>
+    <div class="event-particle event-particle-sm t8 bottom-[32%] right-[10%]"></div>
+
+    <!-- Event dots -->
+    <div class="hero-event-dot top-[15%] right-[25%]"></div>
+    <div class="hero-event-dot bottom-[25%] left-[20%]"></div>
+    <div class="hero-event-dot top-[40%] right-[10%]"></div>
+    <div class="hero-event-dot bottom-[40%] left-[8%]"></div>
+
+    <div class="mx-auto max-w-6xl relative z-10">
+      <div class="flex flex-col items-center text-center">
+        <div class="animate-fade-in-up mb-4 flex items-center justify-center gap-2">
+          <svg class="h-8 w-8 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+          </svg>
+          <span class="text-xs font-medium uppercase tracking-widest text-muted-foreground">AI-Powered</span>
+        </div>
+        <h1 class="animate-fade-in-up mb-2 text-4xl font-bold tracking-tight md:text-6xl">
+          Event-Driven Commerce
+        </h1>
+        <p class="animate-fade-in-up animate-delay-200 mb-4 text-xl md:text-2xl font-medium text-brand">
+          Learning-Focused E-Commerce Platform
+        </p>
+        <p class="animate-fade-in-up animate-delay-300 mb-6 max-w-2xl text-muted-foreground leading-relaxed">
+          A hands-on exploration of Event-Driven Architecture, microservices communication
+          with RabbitMQ, and modern full-stack development — built with Angular, Spring Boot,
+          PostgreSQL, and Docker.
+        </p>
+        <div class="animate-fade-in-up animate-delay-350 mb-6 flex flex-wrap justify-center gap-2">
+          <z-badge class="bg-indigo-500/10 text-indigo-600 border-indigo-500/20 border text-xs">AI-Assisted Development</z-badge>
+          <z-badge zType="secondary" class="text-xs">Spec-Driven</z-badge>
+          <z-badge zType="secondary" class="text-xs">Event-Driven Architecture</z-badge>
+          <z-badge class="bg-amber-500/10 text-amber-600 border-amber-500/20 border text-xs">Opencode</z-badge>
+        </div>
+        <div class="animate-fade-in-up animate-delay-400 flex flex-wrap justify-center gap-3">
+          <a z-button href="#architecture" zType="default">Explore Architecture</a>
+          <a z-button href="https://github.com/TalesSathler/event-driven-commerce" target="_blank" rel="noopener noreferrer" zType="outline">GitHub</a>
+          <a routerLink="/register" z-button zType="ghost">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack Section -->
+  <section id="stack" class="scroll-mt-20 px-4 py-20 bg-muted/30">
+    <div class="mx-auto max-w-6xl">
+      <div class="reveal">
+        <h2 class="mb-3 text-center text-3xl font-bold">Technology Stack</h2>
+        <p class="mb-12 text-center text-muted-foreground text-sm">Tools and technologies powering the platform</p>
+      </div>
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+
+        <div class="skill-card reveal">
+          <div class="skill-card-icon">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+            </svg>
+          </div>
+          <h3 class="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Backend</h3>
+          <div class="flex flex-wrap justify-center gap-1.5">
+            <z-badge zType="secondary">Java 21</z-badge>
+            <z-badge zType="secondary">Spring Boot 3</z-badge>
+            <z-badge zType="secondary">Spring Security</z-badge>
+            <z-badge zType="secondary">Spring AMQP</z-badge>
+            <z-badge zType="secondary">JPA / Hibernate</z-badge>
+          </div>
+        </div>
+
+        <div class="skill-card reveal" style="transition-delay: 80ms;">
+          <div class="skill-card-icon">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+            </svg>
+          </div>
+          <h3 class="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Frontend</h3>
+          <div class="flex flex-wrap justify-center gap-1.5">
+            <z-badge zType="secondary">Angular 21</z-badge>
+            <z-badge zType="secondary">Tailwind CSS 4</z-badge>
+            <z-badge zType="secondary">RxJS</z-badge>
+            <z-badge zType="secondary">Nx Workspace</z-badge>
+          </div>
+        </div>
+
+        <div class="skill-card reveal" style="transition-delay: 160ms;">
+          <div class="skill-card-icon">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
+            </svg>
+          </div>
+          <h3 class="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Databases &amp; Messaging</h3>
+          <div class="flex flex-wrap justify-center gap-1.5">
+            <z-badge zType="secondary">PostgreSQL</z-badge>
+            <z-badge zType="secondary">MongoDB</z-badge>
+            <z-badge zType="secondary">RabbitMQ</z-badge>
+          </div>
+        </div>
+
+        <div class="skill-card reveal" style="transition-delay: 240ms;">
+          <div class="skill-card-icon">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2" />
+            </svg>
+          </div>
+          <h3 class="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Infrastructure</h3>
+          <div class="flex flex-wrap justify-center gap-1.5">
+            <z-badge zType="secondary">Docker</z-badge>
+            <z-badge zType="secondary">Docker Compose</z-badge>
+            <z-badge zType="secondary">Maven</z-badge>
+          </div>
+        </div>
+
+        <div class="skill-card reveal" style="transition-delay: 320ms;">
+          <div class="skill-card-icon">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+          </div>
+          <h3 class="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Observability</h3>
+          <div class="flex flex-wrap justify-center gap-1.5">
+            <z-badge class="bg-orange-500/10 text-orange-600 border-orange-500/20 border">Prometheus</z-badge>
+            <z-badge class="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 border">Grafana</z-badge>
+            <z-badge zType="secondary">cAdvisor</z-badge>
+            <z-badge zType="secondary">Micrometer</z-badge>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture Section -->
+  <section id="architecture" class="scroll-mt-20 px-4 py-20">
+    <div class="mx-auto max-w-6xl">
+      <div class="reveal">
+        <h2 class="mb-3 text-center text-3xl font-bold">Architecture</h2>
+        <p class="mb-12 text-center text-muted-foreground text-sm">Microservices communicating asynchronously through events</p>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2">
+
+        <div class="reveal">
+          <z-card zTitle="API Gateway" zDescription="Centralized routing :8080">
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              All traffic flows through Spring Cloud Gateway. Routes requests to
+              auth-service, product-service, and inventory-service based on path.
+              Handles CORS and acts as a transparent proxy without inspecting JWT payloads.
+            </p>
+            <div card-footer class="flex flex-wrap gap-2">
+              <z-badge class="bg-brand/10 text-brand border-brand/20 border">Reverse Proxy</z-badge>
+              <z-badge class="bg-brand/10 text-brand border-brand/20 border">CORS</z-badge>
+              <z-badge class="bg-brand/10 text-brand border-brand/20 border">Spring Cloud Gateway</z-badge>
+            </div>
+          </z-card>
+        </div>
+        <div class="grid gap-6 md:grid-cols-3">
+
+        <div class="reveal" style="transition-delay: 50ms;">
+          <z-card zTitle="Auth Service" zDescription="User management & RS256 JWT issuance">
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              Handles user registration, login, and JWT refresh. Signs tokens with
+              RS256 using a 2048-bit RSA key pair. Exposes a public key and JWKS
+              endpoint for downstream services to validate tokens locally.
+            </p>
+            <div card-footer class="flex flex-wrap gap-2">
+              <z-badge class="bg-brand/10 text-brand border-brand/20 border">REST API</z-badge>
+              <z-badge class="bg-brand/10 text-brand border-brand/20 border">RS256 JWT</z-badge>
+              <z-badge class="bg-brand/10 text-brand border-brand/20 border">BCrypt</z-badge>
+              <z-badge class="bg-brand/10 text-brand border-brand/20 border">Event Publisher</z-badge>
+            </div>
+          </z-card>
+        </div>
+
+        <div class="reveal" style="transition-delay: 100ms;">
+          <z-card zTitle="Product Service" zDescription="Product catalog & event publishing">
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              Manages product catalog with full CRUD operations. Validates JWTs
+              locally via Spring Security Resource Server (no runtime calls to
+              auth-service). Publishes domain events to RabbitMQ on state changes.
+            </p>
+            <div card-footer class="flex flex-wrap gap-2">
+              <z-badge class="bg-brand/10 text-brand border-brand/20 border">REST API</z-badge>
+              <z-badge class="bg-brand/10 text-brand border-brand/20 border">RS256 Validation</z-badge>
+              <z-badge class="bg-brand/10 text-brand border-brand/20 border">Event Publisher</z-badge>
+            </div>
+          </z-card>
+        </div>
+
+        <div class="reveal" style="transition-delay: 150ms;">
+          <z-card zTitle="Inventory Service" zDescription="Stock management & event consumer">
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              Maintains stock levels for all products. Consumes product events from
+              RabbitMQ to synchronize inventory in real-time. Validates JWTs locally
+              with RS256 public key. Each service owns its dedicated database.
+            </p>
+            <div card-footer class="flex flex-wrap gap-2">
+              <z-badge class="bg-brand/10 text-brand border-brand/20 border">Event Consumer</z-badge>
+              <z-badge class="bg-brand/10 text-brand border-brand/20 border">Stock Management</z-badge>
+              <z-badge class="bg-brand/10 text-brand border-brand/20 border">Database per Service</z-badge>
+            </div>
+          </z-card>
+        </div>
+        </div>
+
+
+
+      </div>
+
+        <div class="reveal mt-6" style="transition-delay: 200ms;">
+          <z-card zTitle="Monitoring &amp; Observability" zDescription="Prometheus, Grafana, cAdvisor &amp; exporters">
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              All services expose metrics via <span class="font-mono text-xs">/actuator/prometheus</span> (Spring Boot Micrometer),
+              HikariCP connection pools, and RabbitMQ broker stats. cAdvisor collects
+              container-level CPU, memory, network, and disk for every running service.
+              PostgreSQL exporters expose database health per instance.
+              Prometheus scrapes every 10s and Grafana visualizes with pre-built dashboards.
+            </p>
+            <div card-footer class="flex flex-wrap gap-2">
+              <a href="http://localhost:9090" target="_blank" rel="noopener noreferrer"><z-badge class="bg-orange-500/10 text-orange-600 border-orange-500/20 border">Prometheus :9090</z-badge></a>
+              <a href="http://localhost:3000" target="_blank" rel="noopener noreferrer"><z-badge class="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 border">Grafana :3000</z-badge></a>
+              <a href="http://localhost:8084" target="_blank" rel="noopener noreferrer"><z-badge zType="secondary">cAdvisor :8084</z-badge></a>
+              <z-badge zType="secondary">PG Exporter :9187</z-badge>
+              <z-badge zType="secondary">RabbitMQ Metrics :15692</z-badge>
+            </div>
+          </z-card>
+        </div>
+
+      </div>
+
+      <!-- Full System Architecture Diagram -->
+      <div class="reveal mt-12">
+        <z-card zTitle="System Architecture" zDescription="Microservices with database-per-service isolation and async event communication">
+          <div class="flex flex-col items-center py-4 text-sm">
+            <div class="grid w-full max-w-xl gap-4 text-xs md:text-sm">
+              <div class="flex items-center justify-center gap-2">
+                <div class="rounded-lg border bg-card px-4 py-2.5 font-medium">Angular SPA<br/><span class="text-xs text-muted-foreground">:4200</span></div>
+                <svg class="h-3 w-3 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                <div class="rounded-lg border border-brand/40 bg-brand/5 px-4 py-2.5 font-medium text-brand">API Gateway<br/><span class="text-xs text-muted-foreground">:8080</span></div>
+              </div>
+              <div class="flex items-center justify-center gap-2">
+                <div class="rounded-lg border bg-card px-4 py-2 font-medium">Auth Service<br/><span class="text-xs text-muted-foreground">:8081</span></div>
+                <svg class="h-3 w-3 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                <div class="rounded-lg border bg-card px-4 py-2 font-medium">Product Service<br/><span class="text-xs text-muted-foreground">:8082</span></div>
+                <svg class="h-3 w-3 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                <div class="rounded-lg border bg-card px-4 py-2 font-medium">Inventory Service<br/><span class="text-xs text-muted-foreground">:8083</span></div>
+              </div>
+              <div class="flex items-center justify-center gap-2">
+                <div class="rounded-lg border bg-card px-4 py-2 font-medium">PostgreSQL<br/><span class="text-xs text-muted-foreground">auth_db :5432</span></div>
+                <svg class="h-3 w-3 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                <div class="rounded-lg border bg-card px-4 py-2 font-medium">PostgreSQL<br/><span class="text-xs text-muted-foreground">product_db :5433</span></div>
+                <svg class="h-3 w-3 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                <div class="rounded-lg border bg-card px-4 py-2 font-medium">PostgreSQL<br/><span class="text-xs text-muted-foreground">inventory_db :5434</span></div>
+              </div>
+              <div class="flex items-center justify-center gap-2">
+                <svg class="h-3 w-3 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                <div class="rounded-lg border-2 border-amber-500/40 bg-amber-500/5 px-4 py-2 font-medium text-amber-600 dark:text-amber-400">RabbitMQ<br/><span class="text-xs text-muted-foreground">:5672</span></div>
+              </div>
+            </div>
+          </div>
+          <div card-footer class="flex flex-wrap gap-2">
+            <z-badge zType="secondary">REST (sync) via Gateway</z-badge>
+            <z-badge zType="secondary">RabbitMQ topic exchange (async)</z-badge>
+            <z-badge zType="secondary">Database per Service</z-badge>
+          </div>
+        </z-card>
+      </div>
+
+      <!-- Communication Flow Example -->
+      <div class="reveal mt-12">
+        <z-card zTitle="Communication Flow" zDescription="Concrete example: creating a product triggers synchronous REST and asynchronous event-driven flows across all services">
+          <!-- Legend -->
+          <div class="mb-4 flex flex-wrap justify-center gap-3 text-xs">
+            <span class="flex items-center gap-1.5 text-muted-foreground">
+              <span class="flex h-5 w-5 items-center justify-center rounded-full bg-brand/10 text-[10px] font-bold text-brand">N</span>
+              Step order
+            </span>
+            <span class="flex items-center gap-1.5 text-muted-foreground">
+              <svg class="h-3.5 w-3.5 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              Sync (REST)
+            </span>
+            <span class="flex items-center gap-1.5 text-muted-foreground">
+              <div class="h-3.5 w-3.5 rounded-sm border-2 border-amber-500/40 bg-amber-500/5"></div>
+              Async (RabbitMQ)
+            </span>
+            <span class="flex items-center gap-1.5 text-muted-foreground">
+              <div class="h-3.5 w-3.5 rounded-sm bg-green-500/10"></div>
+              Producer service
+            </span>
+            <span class="flex items-center gap-1.5 text-muted-foreground">
+              <div class="h-3.5 w-3.5 rounded-sm bg-purple-500/10"></div>
+              Consumer service
+            </span>
+            <span class="flex items-center gap-1.5 text-muted-foreground">
+              <div class="h-3.5 w-3.5 rounded-sm border bg-card"></div>
+              Database
+            </span>
+          </div>
+          <div class="flex flex-col items-center gap-4 py-2 text-sm">
+            <!-- Step 1: Frontend to Gateway -->
+            <div class="flex w-full max-w-xl items-center gap-4 rounded-lg border bg-card px-5 py-3">
+              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand/10 text-xs font-bold text-brand">1</span>
+              <div class="flex-1 text-left">
+                <span class="font-medium">Angular SPA</span>
+                <span class="text-muted-foreground"> POST /api/products</span>
+              </div>
+              <svg class="h-4 w-4 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              <div class="rounded-md border bg-muted/50 px-3 py-1.5 text-xs font-medium">API Gateway :8080</div>
+            </div>
+
+            <!-- Step 2: Gateway to Product Service + DB -->
+            <div class="flex w-full max-w-xl items-center gap-4 rounded-lg border bg-card px-5 py-3">
+              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand/10 text-xs font-bold text-brand">2</span>
+              <div class="rounded-md border bg-muted/50 px-3 py-1.5 text-xs font-medium">Gateway proxies request</div>
+              <svg class="h-4 w-4 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              <div class="rounded-md border bg-green-500/10 px-3 py-1.5 text-xs font-medium text-green-600 dark:text-green-400">Product Service :8082</div>
+              <svg class="h-4 w-4 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              <div class="rounded-md border bg-card px-3 py-1.5 text-xs font-medium">product_db :5433</div>
+            </div>
+
+            <!-- Step 3: Product Service publishes event -->
+            <div class="flex w-full max-w-xl items-center gap-4 rounded-lg border bg-card px-5 py-3">
+              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand/10 text-xs font-bold text-brand">3</span>
+              <div class="rounded-md border bg-green-500/10 px-3 py-1.5 text-xs font-medium text-green-600 dark:text-green-400">Product Service</div>
+              <svg class="h-4 w-4 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              <div class="rounded-md border-2 border-amber-500/40 bg-amber-500/5 px-3 py-1.5 text-xs font-medium text-amber-600 dark:text-amber-400">product.created</div>
+              <svg class="h-4 w-4 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              <div class="rounded-md border-2 border-amber-500/40 bg-amber-500/5 px-3 py-1.5 text-xs font-medium text-amber-600 dark:text-amber-400">product.exchange</div>
+            </div>
+
+            <!-- Step 4: RabbitMQ delivers to Inventory -->
+            <div class="flex w-full max-w-xl items-center gap-4 rounded-lg border bg-card px-5 py-3">
+              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand/10 text-xs font-bold text-brand">4</span>
+              <div class="rounded-md border-2 border-amber-500/40 bg-amber-500/5 px-3 py-1.5 text-xs font-medium text-amber-600 dark:text-amber-400">product.exchange</div>
+              <svg class="h-4 w-4 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              <div class="rounded-md border bg-brand/5 px-3 py-1.5 text-xs font-medium text-brand">product.created.queue</div>
+              <svg class="h-4 w-4 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              <div class="rounded-md border bg-purple-500/10 px-3 py-1.5 text-xs font-medium text-purple-600 dark:text-purple-400">Inventory Service :8083</div>
+            </div>
+
+            <!-- Step 5: Inventory upserts stock -->
+            <div class="flex w-full max-w-xl items-center gap-4 rounded-lg border bg-card px-5 py-3">
+              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand/10 text-xs font-bold text-brand">5</span>
+              <div class="rounded-md border bg-purple-500/10 px-3 py-1.5 text-xs font-medium text-purple-600 dark:text-purple-400">Inventory Service</div>
+              <svg class="h-4 w-4 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              <div class="rounded-md border bg-card px-3 py-1.5 text-xs font-medium">inventory_db :5434</div>
+            </div>
+          </div>
+          <div card-footer class="flex flex-wrap gap-2">
+            <z-badge zType="secondary">REST (sync) via Gateway</z-badge>
+            <z-badge zType="secondary">RabbitMQ (async) — topic exchange</z-badge>
+            <z-badge zType="secondary">Upsert semantics</z-badge>
+            <z-badge zType="secondary">Database per Service</z-badge>
+          </div>
+        </z-card>
+      </div>
+  </section>
+
+  <!-- Roadmap Section -->
+  <section id="roadmap" class="scroll-mt-20 px-4 py-20 bg-muted/30">
+    <div class="mx-auto max-w-4xl">
+      <div class="reveal">
+        <h2 class="mb-3 text-center text-3xl font-bold">Development Roadmap</h2>
+        <p class="mb-12 text-center text-muted-foreground text-sm">Incremental sprints building toward a complete platform</p>
+      </div>
+      <div class="relative pl-6 space-y-8">
+        <div class="absolute left-0 top-2 bottom-0 w-0.5 bg-gradient-to-b from-brand via-border to-transparent"></div>
+
+        <div class="reveal flex gap-4">
+          <div class="timeline-dot mt-1.5 shrink-0"></div>
+          <z-card class="flex-1 border-l-2 border-l-emerald-500" zTitle="Sprint 1 — Foundation" zDescription="Completed">
+            <ul class="space-y-1.5 text-sm text-muted-foreground">
+              <li class="flex items-start gap-1.5">
+                <svg class="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                <span>Project structure & development workflows</span>
+              </li>
+              <li class="flex items-start gap-1.5">
+                <svg class="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                <span>Angular frontend with routing & authentication</span>
+              </li>
+              <li class="flex items-start gap-1.5">
+                <svg class="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                <span>Product Service specification</span>
+              </li>
+              <li class="flex items-start gap-1.5">
+                <svg class="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                <span>Inventory Service specification</span>
+              </li>
+            </ul>
+          </z-card>
+        </div>
+
+        <div class="reveal flex gap-4" style="transition-delay: 100ms;">
+          <div class="timeline-dot mt-1.5 shrink-0"></div>
+          <z-card class="flex-1 border-l-2 border-l-emerald-500" zTitle="Sprint 2 — Auth &amp; Core Services" zDescription="Completed">
+            <ul class="space-y-1.5 text-sm text-muted-foreground">
+              <li class="flex items-start gap-1.5">
+                <svg class="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                <span>Dedicated auth-service with RS256 JWT + API Gateway</span>
+              </li>
+              <li class="flex items-start gap-1.5">
+                <svg class="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                <span>Product CRUD with PostgreSQL (JWT-protected)</span>
+              </li>
+              <li class="flex items-start gap-1.5">
+                <svg class="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                <span>RabbitMQ integration & ProductCreated event</span>
+              </li>
+              <li class="flex items-start gap-1.5">
+                <svg class="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                <span>Inventory consumer & stock synchronization</span>
+              </li>
+            </ul>
+          </z-card>
+        </div>
+
+        <div class="reveal flex gap-4" style="transition-delay: 200ms;">
+          <div class="timeline-dot mt-1.5 shrink-0"></div>
+          <z-card class="flex-1 border-l-2 border-l-emerald-500" zTitle="Sprint 3 — Event Evolution &amp; UI" zDescription="Completed">
+            <ul class="space-y-1.5 text-sm text-muted-foreground">
+              <li class="flex items-start gap-1.5">
+                <svg class="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                <span>ProductUpdated & ProductDeleted events</span>
+              </li>
+              <li class="flex items-start gap-1.5">
+                <svg class="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                <span>Product listing, detail, create & edit pages</span>
+              </li>
+              <li class="flex items-start gap-1.5">
+                <svg class="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                <span>Monitoring & observability (Prometheus, Grafana, cAdvisor)</span>
+              </li>
+            </ul>
+          </z-card>
+        </div>
+
+        <div class="reveal flex gap-4" style="transition-delay: 300ms;">
+          <div class="timeline-dot mt-1.5 shrink-0"></div>
+          <z-card class="flex-1 border-l-2 border-l-brand" zTitle="Sprint 4 — Order Management" zDescription="Upcoming">
+            <ul class="space-y-1.5 text-sm text-muted-foreground">
+              <li class="flex items-start gap-1.5">
+                <div class="h-3.5 w-3.5 shrink-0 mt-0.5 rounded-full border-2 border-muted-foreground"></div>
+                <span>Order Service with dedicated database</span>
+              </li>
+              <li class="flex items-start gap-1.5">
+                <div class="h-3.5 w-3.5 shrink-0 mt-0.5 rounded-full border-2 border-muted-foreground"></div>
+                <span>ORDER_CREATED event & inventory reservation</span>
+              </li>
+              <li class="flex items-start gap-1.5">
+                <div class="h-3.5 w-3.5 shrink-0 mt-0.5 rounded-full border-2 border-muted-foreground"></div>
+                <span>Shopping cart & checkout flow</span>
+              </li>
+            </ul>
+          </z-card>
+        </div>
+
+        <div class="reveal flex gap-4" style="transition-delay: 400ms;">
+          <div class="timeline-dot mt-1.5 shrink-0"></div>
+          <z-card class="flex-1" zTitle="Sprint 5 — Reliability &amp; Scale" zDescription="Future">
+            <ul class="space-y-1.5 text-sm text-muted-foreground">
+              <li class="flex items-start gap-1.5">
+                <div class="h-3.5 w-3.5 shrink-0 mt-0.5 rounded-full border-2 border-muted-foreground"></div>
+                <span>Retry & Dead Letter Queue patterns</span>
+              </li>
+              <li class="flex items-start gap-1.5">
+                <div class="h-3.5 w-3.5 shrink-0 mt-0.5 rounded-full border-2 border-muted-foreground"></div>
+                <span>Error handling & event replay</span>
+              </li>
+              <li class="flex items-start gap-1.5">
+                <div class="h-3.5 w-3.5 shrink-0 mt-0.5 rounded-full border-2 border-muted-foreground"></div>
+                <span>Alerts & dashboard refinement</span>
+              </li>
+            </ul>
+          </z-card>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Docs Section -->
+  <section id="docs" class="scroll-mt-20 px-4 py-20">
+    <div class="mx-auto max-w-6xl">
+      <div class="reveal">
+        <h2 class="mb-3 text-center text-3xl font-bold">Documentation</h2>
+        <p class="mb-12 text-center text-muted-foreground text-sm">Specifications, architecture decisions, and API references</p>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+
+        <div class="reveal">
+          <z-card zTitle="Spec-Driven Development" zDescription="Methodology guiding this project">
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              Every feature starts as a specification in <span class="font-mono text-xs">specs/</span>. Architecture, services, events,
+              and database schemas are defined before any implementation begins. Six ADRs
+              document every design decision.
+            </p>
+            <div card-footer>
+              <a z-button href="https://github.com/TalesSathler/event-driven-commerce/tree/main/docs" target="_blank" rel="noopener noreferrer" zType="ghost" class="text-xs">Read Docs →</a>
+            </div>
+          </z-card>
+        </div>
+
+        <div class="reveal" style="transition-delay: 100ms;">
+          <z-card zTitle="Specifications Inventory" zDescription="Complete set of formal specs">
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              The <span class="font-mono text-xs">specs/</span> directory contains PRD, service contracts, event schemas,
+              database designs, frontend requirements, and generated implementation tasks.
+              All specs are version-controlled alongside the code.
+            </p>
+            <div card-footer>
+              <a z-button href="https://github.com/TalesSathler/event-driven-commerce/tree/main/specs" target="_blank" rel="noopener noreferrer" zType="ghost" class="text-xs">Browse specs/ →</a>
+            </div>
+          </z-card>
+        </div>
+
+        <div class="reveal" style="transition-delay: 200ms;">
+          <z-card zTitle="Architecture Decisions" zDescription="ADRs for every design choice">
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              All architectural decisions are documented as ADRs in <span class="font-mono text-xs">specs/decisions/</span> — from RabbitMQ
+              topic exchange design to database-per-service strategy, JWT authentication,
+              Docker Compose orchestration, and Flyway migrations.
+            </p>
+            <div card-footer>
+              <a z-button href="https://github.com/TalesSathler/event-driven-commerce/tree/main/specs/decisions" target="_blank" rel="noopener noreferrer" zType="ghost" class="text-xs">View ADRs →</a>
+            </div>
+          </z-card>
+        </div>
+
+        <div class="reveal" style="transition-delay: 300ms;">
+          <z-card zTitle="API Docs (Swagger)" zDescription="Interactive OpenAPI documentation">
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              Each service exposes a Swagger UI with auto-generated OpenAPI specs.
+              Browse endpoints, inspect request/response schemas, and test API calls directly.
+            </p>
+            <div card-footer class="flex flex-wrap gap-2">
+              <a [href]="swaggerAuth" target="_blank" rel="noopener noreferrer" z-button zType="default" class="text-xs">Auth Service</a>
+              <a [href]="swaggerProduct" target="_blank" rel="noopener noreferrer" z-button zType="outline" class="text-xs">Product Service</a>
+              <a [href]="swaggerInventory" target="_blank" rel="noopener noreferrer" z-button zType="outline" class="text-xs">Inventory Service</a>
+            </div>
+          </z-card>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Getting Started Section -->
+  <section id="getting-started" class="scroll-mt-20 px-4 py-20 bg-muted/30">
+    <div class="mx-auto max-w-4xl text-center">
+      <div class="reveal">
+        <h2 class="mb-4 text-3xl font-bold">Getting Started</h2>
+        <p class="mb-8 text-muted-foreground max-w-lg mx-auto">
+          Clone the repository, start the infrastructure with a single command, and access all services.
+        </p>
+      </div>
+      <div class="reveal flex justify-center" style="transition-delay: 100ms;">
+        <pre class="rounded-xl border bg-card px-6 py-4 text-sm text-left overflow-x-auto max-w-lg"><code>git clone https://github.com/TalesSathler/event-driven-commerce.git
+cd event-driven-commerce
+docker compose up -d</code></pre>
+      </div>
+      <div class="reveal mt-4 flex flex-wrap justify-center gap-4" style="transition-delay: 150ms;">
+        <a href="http://localhost:8080" target="_blank" rel="noopener noreferrer"><z-badge class="bg-brand/10 text-brand border-brand/20 border">Gateway :8080</z-badge></a>
+        <a href="http://localhost:8081/swagger-ui/index.html" target="_blank" rel="noopener noreferrer"><z-badge class="bg-brand/10 text-brand border-brand/20 border">Auth :8081</z-badge></a>
+        <a href="http://localhost:8082/swagger-ui/index.html" target="_blank" rel="noopener noreferrer"><z-badge class="bg-brand/10 text-brand border-brand/20 border">Product :8082</z-badge></a>
+        <a href="http://localhost:8083/swagger-ui/index.html" target="_blank" rel="noopener noreferrer"><z-badge class="bg-brand/10 text-brand border-brand/20 border">Inventory :8083</z-badge></a>
+        <a href="http://localhost:4200" target="_blank" rel="noopener noreferrer"><z-badge zType="secondary">Frontend :4200</z-badge></a>
+        <a href="http://localhost:15672" target="_blank" rel="noopener noreferrer"><z-badge zType="secondary">RabbitMQ UI :15672</z-badge></a>
+        <a href="http://localhost:9090" target="_blank" rel="noopener noreferrer"><z-badge class="bg-orange-500/10 text-orange-600 border-orange-500/20 border">Prometheus :9090</z-badge></a>
+        <a href="http://localhost:3000" target="_blank" rel="noopener noreferrer"><z-badge class="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 border">Grafana :3000</z-badge></a>
+        <a href="http://localhost:8084" target="_blank" rel="noopener noreferrer"><z-badge zType="secondary">cAdvisor :8084</z-badge></a>
+      </div>
+      <div class="reveal mt-6 flex flex-wrap justify-center gap-4" style="transition-delay: 200ms;">
+        <a z-button href="https://github.com/TalesSathler/event-driven-commerce" target="_blank" rel="noopener noreferrer" zType="default">View on GitHub</a>
+        <a z-button href="https://github.com/TalesSathler/event-driven-commerce/issues" target="_blank" rel="noopener noreferrer" zType="outline">Report Issue</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="relative overflow-hidden px-4 py-10 text-center border-t">
+    <div class="footer-event-line absolute top-0 left-1/4 right-1/4"></div>
+    <div class="relative z-10">
+      <p class="text-sm text-muted-foreground">
+        <span class="footer-dot"></span>
+        &copy; {{ currentYear }} Event-Driven Commerce
+        <span class="footer-dot"></span>
+      </p>
+      <p class="mt-1 text-xs text-muted-foreground/60">
+        Angular &middot; Spring Boot &middot; RabbitMQ &middot; PostgreSQL &middot; Docker
+      </p>
+      <p class="mt-2 text-xs text-muted-foreground/40">
+        Built with Opencode &amp; Spec-Driven Development
+      </p>
+    </div>
+  </footer>
+</div>

@@ -1,0 +1,7 @@
+node_modules
+.nx
+.angular
+dist
+.git
+.github
+.vscode

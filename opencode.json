@@ -1,0 +1,48 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "read": {
+      ".env": "deny",
+      ".env.*": "ask",
+      "**/.env": "deny",
+      "**/.env.*": "ask",
+      "**/*": "allow"
+    },
+    "edit": {
+      ".env": "deny",
+      ".env.*": "ask",
+      "**/.env": "deny",
+      "**/.env.*": "ask",
+      "**/*": "allow"
+    },
+    "bash": {
+      "npm install*": "allow",
+      "npm run*": "allow",
+      "npm test*": "allow",
+      "npm run lint*": "allow",
+      "yarn install*": "allow",
+      "yarn run*": "allow",
+      "yarn test*": "allow",
+      "yarn lint*": "allow",
+      "npx nx build*": "allow",
+      "rm -rf *": "ask",
+      "sudo *": "deny",
+      "sudo*": "deny",
+      "docker-compose *": "allow",
+      "docker compose *": "allow",
+      "docker ps*": "allow",
+      "docker logs*": "allow",
+      "docker logs *": "allow",
+      "docker stop*": "allow",
+      "docker rm*": "allow",
+      "docker run*": "ask",
+      "docker stats*": "allow",
+      "docker inspect*": "allow",
+      "git status": "allow",
+      "git diff*": "allow",
+      "git branch*": "allow",
+      "git log*": "allow",
+      "**/*": "ask"
+    }
+  }
+}

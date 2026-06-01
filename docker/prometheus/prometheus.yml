@@ -1,0 +1,53 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+
+  - job_name: 'cadvisor'
+    scrape_interval: 10s
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['cadvisor:8080']
+        labels:
+          source: 'docker'
+
+  - job_name: 'product-service'
+    scrape_interval: 10s
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ['product-service:8080']
+        labels:
+          application: 'product-service'
+
+  - job_name: 'inventory-service'
+    scrape_interval: 10s
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ['inventory-service:8081']
+        labels:
+          application: 'inventory-service'
+
+  - job_name: 'postgres-product-exporter'
+    scrape_interval: 10s
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['postgres-product-exporter:9187']
+        labels:
+          database: 'product_db'
+
+  - job_name: 'postgres-inventory-exporter'
+    scrape_interval: 10s
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['postgres-inventory-exporter:9187']
+        labels:
+          database: 'inventory_db'
+
+  - job_name: 'rabbitmq'
+    scrape_interval: 10s
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['rabbitmq:15692']
+        labels:
+          source: 'rabbitmq'

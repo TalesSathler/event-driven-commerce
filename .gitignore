@@ -1,0 +1,43 @@
+# IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Build
+node_modules
+target
+.nx
+.angular
+dist
+*.class
+*.jar
+*.war
+
+# Environment
+.env
+.env.local
+*.log
+heapdump*.hprof
+*.pid
+*.hprof
+
+# Runtime generated RSA keys
+keys/
+
+# Package lockfiles (committed intentionally, prevent drift)
+# yarn.lock is tracked; keep .gitignore entry for new projects
+yarn.lock

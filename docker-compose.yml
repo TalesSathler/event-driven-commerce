@@ -1,0 +1,266 @@
+networks:
+  edc-network:
+    driver: bridge
+
+volumes:
+  postgres_product_data:
+  postgres_inventory_data:
+  postgres_auth_data:
+  rabbitmq_data:
+  prometheus_data:
+  grafana_data:
+
+services:
+  postgres-auth:
+    image: postgres:16-alpine
+    container_name: edc-postgres-auth
+    environment:
+      POSTGRES_DB: auth_db
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_auth_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - edc-network
+
+  postgres-product:
+    image: postgres:16-alpine
+    container_name: edc-postgres-product
+    environment:
+      POSTGRES_DB: product_db
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_product_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - edc-network
+
+  postgres-inventory:
+    image: postgres:16-alpine
+    container_name: edc-postgres-inventory
+    environment:
+      POSTGRES_DB: inventory_db
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_inventory_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - edc-network
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: edc-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+      - "15692:15692"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-admin}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-admin}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - ./docker/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+    restart: unless-stopped
+    networks:
+      - edc-network
+
+  gateway:
+    build:
+      context: ./services/gateway
+      dockerfile: Dockerfile
+    container_name: edc-gateway
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    depends_on:
+      - auth-service
+      - product-service
+      - inventory-service
+    networks:
+      - edc-network
+
+  auth-service:
+    build:
+      context: ./services/auth-service
+      dockerfile: Dockerfile
+    container_name: edc-auth-service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-auth:5432/auth_db
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_USERNAME: ${RABBITMQ_USER:-admin}
+      SPRING_RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:-admin}
+      APP_JWT_KEYS_DIR: /app/keys
+    volumes:
+      - ./keys:/app/keys
+    restart: unless-stopped
+    depends_on:
+      postgres-auth:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+    networks:
+      - edc-network
+
+  product-service:
+    build:
+      context: ./services/product-service
+      dockerfile: Dockerfile
+    container_name: edc-product-service
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-product:5432/product_db
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_USERNAME: ${RABBITMQ_USER:-admin}
+      SPRING_RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:-admin}
+      JWT_JWKS_URI: http://auth-service:8081/api/auth/jwks
+    restart: unless-stopped
+    depends_on:
+      postgres-product:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+    networks:
+      - edc-network
+
+  inventory-service:
+    build:
+      context: ./services/inventory-service
+      dockerfile: Dockerfile
+    container_name: edc-inventory-service
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-inventory:5432/inventory_db
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_USERNAME: ${RABBITMQ_USER:-admin}
+      SPRING_RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:-admin}
+      JWT_JWKS_URI: http://auth-service:8081/api/auth/jwks
+    restart: unless-stopped
+    depends_on:
+      postgres-inventory:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+    networks:
+      - edc-network
+
+  frontend:
+    build: ./frontend
+    container_name: edc-frontend
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./frontend:/app
+    environment:
+      CHOKIDAR_USEPOLLING: "1"
+    restart: unless-stopped
+    networks:
+      - edc-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: edc-cadvisor
+    ports:
+      - "8084:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    privileged: true
+    devices:
+      - /dev/kmsg:/dev/kmsg
+    restart: unless-stopped
+    networks:
+      - edc-network
+
+  postgres-product-exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    container_name: edc-postgres-product-exporter
+    ports:
+      - "9187:9187"
+    environment:
+      DATA_SOURCE_URI: "postgres-product:5432/product_db?sslmode=disable"
+      DATA_SOURCE_USER: ${POSTGRES_USER:-postgres}
+      DATA_SOURCE_PASS: ${POSTGRES_PASSWORD:-postgres}
+    restart: unless-stopped
+    depends_on:
+      postgres-product:
+        condition: service_started
+    networks:
+      - edc-network
+
+  postgres-inventory-exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    container_name: edc-postgres-inventory-exporter
+    ports:
+      - "9188:9187"
+    environment:
+      DATA_SOURCE_URI: "postgres-inventory:5432/inventory_db?sslmode=disable"
+      DATA_SOURCE_USER: ${POSTGRES_USER:-postgres}
+      DATA_SOURCE_PASS: ${POSTGRES_PASSWORD:-postgres}
+    restart: unless-stopped
+    depends_on:
+      postgres-inventory:
+        condition: service_started
+    networks:
+      - edc-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: edc-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+    restart: unless-stopped
+    depends_on:
+      - cadvisor
+      - postgres-product-exporter
+      - postgres-inventory-exporter
+    networks:
+      - edc-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: edc-grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./docker/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml:ro
+      - grafana_data:/var/lib/grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
+      GF_INSTALL_PLUGINS: ""
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+    networks:
+      - edc-network

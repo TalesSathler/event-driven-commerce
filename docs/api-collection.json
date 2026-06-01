@@ -1,0 +1,73 @@
+{
+  "info": {
+    "name": "Event-Driven Commerce API",
+    "description": "API collection for Event-Driven Commerce microservices",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "opencode"
+  },
+  "item": [{
+    "name": "Auth Service",
+    "description": "Authentication, registration, and token management",
+    "item": [
+      {
+        "name": "Register",
+        "request": {
+          "method": "POST",
+          "header": [{"key": "Content-Type", "value": "application/json"}],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"name\": \"John Doe\", \"email\": \"john@example.com\", \"password\": \"password123\"}"
+          },
+          "url": {
+            "raw": "{{base_url}}/api/auth/register",
+            "host": ["{{base_url}}"],
+            "path": ["api", "auth", "register"]
+          }
+        }
+      },
+      {
+        "name": "Login",
+        "request": {
+          "method": "POST",
+          "header": [{"key": "Content-Type", "value": "application/json"}],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"email\": \"john@example.com\", \"password\": \"password123\"}"
+          },
+          "url": {
+            "raw": "{{base_url}}/api/auth/login",
+            "host": ["{{base_url}}"],
+            "path": ["api", "auth", "login"]
+          }
+        }
+      },
+      {
+        "name": "Refresh Token",
+        "request": {
+          "method": "POST",
+          "header": [{"key": "Content-Type", "value": "application/json"}],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"refreshToken\": \"your-refresh-token\"}"
+          },
+          "url": {
+            "raw": "{{base_url}}/api/auth/refresh",
+            "host": ["{{base_url}}"],
+            "path": ["api", "auth", "refresh"]
+          }
+        }
+      },
+      {
+        "name": "Get Public Key",
+        "request": {
+          "method": "GET",
+          "url": {
+            "raw": "{{base_url}}/api/auth/public-key",
+            "host": ["{{base_url}}"],
+            "path": ["api", "auth", "public-key"]
+          }
+        }
+      }
+    ]
+  }]
+}

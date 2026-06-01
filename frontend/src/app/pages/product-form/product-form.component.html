@@ -1,0 +1,123 @@
+<div class="min-h-screen bg-background">
+  <div class="mx-auto max-w-lg px-4 py-8">
+
+    <nav class="mb-6 text-sm text-muted-foreground">
+      <a routerLink="/products" class="hover:text-foreground transition-colors">Products</a>
+      <span class="mx-2">/</span>
+      <span class="text-foreground font-medium">{{ isEdit() ? 'Edit' : 'New' }}</span>
+    </nav>
+
+    <z-card>
+      <h1 class="text-2xl font-bold mb-6">{{ isEdit() ? 'Edit Product' : 'New Product' }}</h1>
+
+      @if (loading()) {
+        <div class="animate-pulse space-y-4">
+          <div class="h-10 w-full rounded-lg bg-muted"></div>
+          <div class="h-20 w-full rounded-lg bg-muted"></div>
+          <div class="h-10 w-full rounded-lg bg-muted"></div>
+          <div class="h-10 w-full rounded-lg bg-muted"></div>
+        </div>
+      } @else {
+        <form (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+          <div>
+            <label for="name" class="text-sm font-medium">Name *</label>
+            <input
+              id="name"
+              type="text"
+              [ngModel]="name()"
+              (ngModelChange)="name.set($event)"
+              name="name"
+              required
+              class="mt-1 block w-full rounded-lg border bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring transition-colors"
+              [class.border-destructive]="fieldErrors()['name']"
+              [class.border-input]="!fieldErrors()['name']"
+              placeholder="Product name"
+            />
+            @if (fieldErrors()['name']) {
+              <p class="mt-1 text-sm text-destructive">{{ fieldErrors()['name'] }}</p>
+            }
+          </div>
+
+          <div>
+            <label for="description" class="text-sm font-medium">Description</label>
+            <textarea
+              id="description"
+              [ngModel]="description()"
+              (ngModelChange)="description.set($event)"
+              name="description"
+              rows="4"
+              maxlength="500"
+              class="mt-1 block w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring resize-y"
+              placeholder="Product description"
+            ></textarea>
+            <div class="mt-1 flex justify-end">
+              <span class="text-xs" [class.text-amber-500]="descLength() > 450" [class.text-muted-foreground]="descLength() <= 450">
+                {{ descLength() }} / 500
+              </span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label for="price" class="text-sm font-medium">Price *</label>
+              <div class="relative mt-1">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground pointer-events-none">$</span>
+                <input
+                  id="price"
+                  type="number"
+                  step="0.01"
+                  min="0.01"
+                  [ngModel]="price()"
+                  (ngModelChange)="price.set($event)"
+                  name="price"
+                  required
+                  class="block w-full rounded-lg border bg-background pl-7 pr-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring transition-colors"
+                  [class.border-destructive]="fieldErrors()['price']"
+                  [class.border-input]="!fieldErrors()['price']"
+                  placeholder="0.00"
+                />
+              </div>
+              @if (fieldErrors()['price']) {
+                <p class="mt-1 text-sm text-destructive">{{ fieldErrors()['price'] }}</p>
+              }
+            </div>
+
+            <div>
+              <label for="quantity" class="text-sm font-medium">Quantity</label>
+              <input
+                id="quantity"
+                type="number"
+                min="0"
+                [ngModel]="quantity()"
+                (ngModelChange)="quantity.set($event)"
+                name="quantity"
+                class="mt-1 block w-full rounded-lg border bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring transition-colors"
+                [class.border-destructive]="fieldErrors()['quantity']"
+                [class.border-input]="!fieldErrors()['quantity']"
+                placeholder="0"
+              />
+              @if (fieldErrors()['quantity']) {
+                <p class="mt-1 text-sm text-destructive">{{ fieldErrors()['quantity'] }}</p>
+              }
+            </div>
+          </div>
+
+          @if (error()) {
+            <div class="rounded-lg border border-destructive/30 bg-destructive/5 p-3">
+              <p class="text-sm text-destructive">{{ error() }}</p>
+            </div>
+          }
+
+          <div class="flex gap-3 pt-2">
+            <button z-button type="submit" [zLoading]="submitting()">
+              {{ isEdit() ? 'Update' : 'Create' }}
+            </button>
+            <button z-button type="button" zType="outline" (click)="cancel()">
+              Cancel
+            </button>
+          </div>
+        </form>
+      }
+    </z-card>
+  </div>
+</div>
