@@ -57,7 +57,7 @@ class ProductControllerTest {
     when(productService.findAll()).thenReturn(List.of(response));
 
     mockMvc.perform(get("/api/products")
-            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_user"))))
+            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_USER"))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$[0].name").value("Mouse"));
   }
@@ -69,7 +69,7 @@ class ProductControllerTest {
     when(productService.findById(productId)).thenReturn(response);
 
     mockMvc.perform(get("/api/products/{id}", productId)
-            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_user"))))
+            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_USER"))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.name").value("Keyboard"));
   }
@@ -79,7 +79,7 @@ class ProductControllerTest {
     when(productService.findById(productId)).thenThrow(new ProductNotFoundException(productId));
 
     mockMvc.perform(get("/api/products/{id}", productId)
-            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_user"))))
+            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_USER"))))
         .andExpect(status().isNotFound());
   }
 
@@ -91,7 +91,7 @@ class ProductControllerTest {
     when(productService.create(any())).thenReturn(response);
 
     mockMvc.perform(post("/api/products")
-            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_admin")))
+            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_ADMIN")))
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(request)))
         .andExpect(status().isCreated())
@@ -106,7 +106,7 @@ class ProductControllerTest {
     when(productService.update(any(), any())).thenReturn(response);
 
     mockMvc.perform(put("/api/products/{id}", productId)
-            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_admin")))
+            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_ADMIN")))
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(request)))
         .andExpect(status().isOk())
@@ -116,7 +116,7 @@ class ProductControllerTest {
   @Test
   void shouldDeleteProduct() throws Exception {
     mockMvc.perform(delete("/api/products/{id}", productId)
-            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_admin"))))
+            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_ADMIN"))))
         .andExpect(status().isNoContent());
   }
 
@@ -125,7 +125,7 @@ class ProductControllerTest {
     var invalid = new ProductRequest("", null, BigDecimal.valueOf(-1), -1);
 
     mockMvc.perform(post("/api/products")
-            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_admin")))
+            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_ADMIN")))
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(invalid)))
         .andExpect(status().isBadRequest());
@@ -142,7 +142,7 @@ class ProductControllerTest {
     var request = new ProductRequest("Mouse", "Wireless", BigDecimal.valueOf(29.99), 100);
 
     mockMvc.perform(post("/api/products")
-            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_user")))
+            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_USER")))
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(request)))
         .andExpect(status().isForbidden());

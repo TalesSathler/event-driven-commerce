@@ -45,7 +45,7 @@ class InventoryControllerTest {
     when(inventoryService.findAll()).thenReturn(List.of(response));
 
     mockMvc.perform(get("/api/inventory")
-            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_user"))))
+            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_USER"))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$[0].productName").value("Mouse"))
         .andExpect(jsonPath("$[0].availableQuantity").value(100));
@@ -58,7 +58,7 @@ class InventoryControllerTest {
     when(inventoryService.findByProductId(productId)).thenReturn(response);
 
     mockMvc.perform(get("/api/inventory/{productId}", productId)
-            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_user"))))
+            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_USER"))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.productName").value("Keyboard"));
   }
@@ -69,7 +69,7 @@ class InventoryControllerTest {
     when(inventoryService.findByProductId(productId)).thenThrow(new InventoryNotFoundException(productId));
 
     mockMvc.perform(get("/api/inventory/{productId}", productId)
-            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_user"))))
+            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_USER"))))
         .andExpect(status().isNotFound());
   }
 
@@ -80,7 +80,7 @@ class InventoryControllerTest {
     when(inventoryService.adjustQuantity(any(), any())).thenReturn(response);
 
     mockMvc.perform(put("/api/inventory/{productId}", productId)
-            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_admin")))
+            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_ADMIN")))
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(new InventoryAdjustRequest(50))))
         .andExpect(status().isOk())
@@ -92,7 +92,7 @@ class InventoryControllerTest {
     var productId = UUID.randomUUID();
 
     mockMvc.perform(put("/api/inventory/{productId}", productId)
-            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_admin")))
+            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_ADMIN")))
             .contentType(MediaType.APPLICATION_JSON)
             .content("{\"quantity\": -1}"))
         .andExpect(status().isBadRequest());
@@ -107,7 +107,7 @@ class InventoryControllerTest {
   @Test
   void shouldReturn403ForUserOnWriteOperations() throws Exception {
     mockMvc.perform(put("/api/inventory/{productId}", UUID.randomUUID())
-            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_user")))
+            .with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_USER")))
             .contentType(MediaType.APPLICATION_JSON)
             .content("{\"quantity\": 50}"))
         .andExpect(status().isForbidden());
