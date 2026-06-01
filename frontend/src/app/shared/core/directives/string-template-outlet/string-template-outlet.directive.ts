@@ -144,6 +144,7 @@ export class ZardStringTemplateOutletDirective<T = unknown> implements OnDestroy
     _dir: ZardStringTemplateOutletDirective<T>,
     _ctx: unknown,
   ): _ctx is ZardStringTemplateOutletContext {
+    void _ctx;
     return true;
   }
 

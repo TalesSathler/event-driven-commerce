@@ -1,4 +1,4 @@
-import { Component, inject, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, inject, AfterViewInit, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ZardBadgeComponent } from '../../shared/components/badge';
@@ -24,7 +24,7 @@ export class HomeComponent implements AfterViewInit {
   readonly swaggerInventory = environment.swagger.inventoryService;
   readonly swaggerAuth = environment.swagger.authService;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
+  readonly platformId = inject(PLATFORM_ID);
 
   ngAfterViewInit(): void {
     if (typeof window === 'undefined') return;
