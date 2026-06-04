@@ -3,7 +3,8 @@
   <nav class="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-sm">
     <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
       <span class="text-sm font-semibold tracking-tight">Event-Driven Commerce</span>
-      <div class="flex items-center gap-6">
+      <!-- Desktop nav -->
+      <div class="hidden md:flex items-center gap-6">
         <a href="#overview" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Overview</a>
         <a href="#stack" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Stack</a>
         <a href="#architecture" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Architecture</a>
@@ -17,7 +18,36 @@
           <a routerLink="/login" z-button zType="ghost">Sign In</a>
         }
       </div>
+      <!-- Hamburger -->
+      <button (click)="menuOpen = !menuOpen" class="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors" aria-label="Toggle menu">
+        @if (menuOpen) {
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        } @else {
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        }
+      </button>
     </div>
+    <!-- Mobile menu -->
+    @if (menuOpen) {
+      <div class="md:hidden border-t bg-background/95 backdrop-blur-sm px-4 py-3 flex flex-col gap-3">
+        <a href="#overview" (click)="menuOpen = false" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Overview</a>
+        <a href="#stack" (click)="menuOpen = false" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Stack</a>
+        <a href="#architecture" (click)="menuOpen = false" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Architecture</a>
+        <a href="#roadmap" (click)="menuOpen = false" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Roadmap</a>
+        <a href="#docs" (click)="menuOpen = false" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Docs</a>
+        <a href="#getting-started" (click)="menuOpen = false" class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Getting Started</a>
+        @if (auth.isAuthenticated) {
+          <span class="text-sm text-muted-foreground">{{ auth.name }}</span>
+          <a routerLink="/products" (click)="menuOpen = false" z-button zType="ghost">Products</a>
+        } @else {
+          <a routerLink="/login" (click)="menuOpen = false" z-button zType="ghost">Sign In</a>
+        }
+      </div>
+    }
   </nav>
 
   <!-- Hero Section -->

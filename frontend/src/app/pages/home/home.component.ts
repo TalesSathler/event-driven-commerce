@@ -20,6 +20,7 @@ import { environment } from '../../../environments/environment';
 export class HomeComponent implements AfterViewInit {
   readonly auth = inject(AuthService);
   currentYear = new Date().getFullYear();
+  menuOpen = false;
   readonly swaggerProduct = environment.swagger.productService;
   readonly swaggerInventory = environment.swagger.inventoryService;
   readonly swaggerAuth = environment.swagger.authService;
