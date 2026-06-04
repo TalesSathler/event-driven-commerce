@@ -372,51 +372,51 @@
           </div>
           <div class="flex flex-col items-center gap-4 py-2 text-sm">
             <!-- Step 1: Frontend to Gateway -->
-            <div class="flex w-full max-w-xl items-center gap-4 rounded-lg border bg-card px-5 py-3">
+            <div class="flex flex-col md:flex-row w-full max-w-xl items-start md:items-center gap-2 md:gap-4 rounded-lg border bg-card px-5 py-3">
               <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand/10 text-xs font-bold text-brand">1</span>
               <div class="flex-1 text-left">
                 <span class="font-medium">Angular SPA</span>
                 <span class="text-muted-foreground"> POST /api/products</span>
               </div>
-              <svg class="h-4 w-4 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              <svg class="h-4 w-4 shrink-0 text-muted-foreground rotate-90 md:rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
               <div class="rounded-md border bg-muted/50 px-3 py-1.5 text-xs font-medium">API Gateway :8080</div>
             </div>
 
             <!-- Step 2: Gateway to Product Service + DB -->
-            <div class="flex w-full max-w-xl items-center gap-4 rounded-lg border bg-card px-5 py-3">
+            <div class="flex flex-col md:flex-row w-full max-w-xl items-start md:items-center gap-2 md:gap-4 rounded-lg border bg-card px-5 py-3">
               <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand/10 text-xs font-bold text-brand">2</span>
               <div class="rounded-md border bg-muted/50 px-3 py-1.5 text-xs font-medium">Gateway proxies request</div>
-              <svg class="h-4 w-4 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              <svg class="h-4 w-4 shrink-0 text-muted-foreground rotate-90 md:rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
               <div class="rounded-md border bg-green-500/10 px-3 py-1.5 text-xs font-medium text-green-600 dark:text-green-400">Product Service :8082</div>
-              <svg class="h-4 w-4 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              <svg class="h-4 w-4 shrink-0 text-muted-foreground rotate-90 md:rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
               <div class="rounded-md border bg-card px-3 py-1.5 text-xs font-medium">product_db :5433</div>
             </div>
 
             <!-- Step 3: Product Service publishes event -->
-            <div class="flex w-full max-w-xl items-center gap-4 rounded-lg border bg-card px-5 py-3">
+            <div class="flex flex-col md:flex-row w-full max-w-xl items-start md:items-center gap-2 md:gap-4 rounded-lg border bg-card px-5 py-3">
               <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand/10 text-xs font-bold text-brand">3</span>
               <div class="rounded-md border bg-green-500/10 px-3 py-1.5 text-xs font-medium text-green-600 dark:text-green-400">Product Service</div>
-              <svg class="h-4 w-4 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              <svg class="h-4 w-4 shrink-0 text-muted-foreground rotate-90 md:rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
               <div class="rounded-md border-2 border-amber-500/40 bg-amber-500/5 px-3 py-1.5 text-xs font-medium text-amber-600 dark:text-amber-400">product.created</div>
-              <svg class="h-4 w-4 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              <svg class="h-4 w-4 shrink-0 text-muted-foreground rotate-90 md:rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
               <div class="rounded-md border-2 border-amber-500/40 bg-amber-500/5 px-3 py-1.5 text-xs font-medium text-amber-600 dark:text-amber-400">product.exchange</div>
             </div>
 
             <!-- Step 4: RabbitMQ delivers to Inventory -->
-            <div class="flex w-full max-w-xl items-center gap-4 rounded-lg border bg-card px-5 py-3">
+            <div class="flex flex-col md:flex-row w-full max-w-xl items-start md:items-center gap-2 md:gap-4 rounded-lg border bg-card px-5 py-3">
               <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand/10 text-xs font-bold text-brand">4</span>
               <div class="rounded-md border-2 border-amber-500/40 bg-amber-500/5 px-3 py-1.5 text-xs font-medium text-amber-600 dark:text-amber-400">product.exchange</div>
-              <svg class="h-4 w-4 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              <svg class="h-4 w-4 shrink-0 text-muted-foreground rotate-90 md:rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
               <div class="rounded-md border bg-brand/5 px-3 py-1.5 text-xs font-medium text-brand">product.created.queue</div>
-              <svg class="h-4 w-4 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              <svg class="h-4 w-4 shrink-0 text-muted-foreground rotate-90 md:rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
               <div class="rounded-md border bg-purple-500/10 px-3 py-1.5 text-xs font-medium text-purple-600 dark:text-purple-400">Inventory Service :8083</div>
             </div>
 
             <!-- Step 5: Inventory upserts stock -->
-            <div class="flex w-full max-w-xl items-center gap-4 rounded-lg border bg-card px-5 py-3">
+            <div class="flex flex-col md:flex-row w-full max-w-xl items-start md:items-center gap-2 md:gap-4 rounded-lg border bg-card px-5 py-3">
               <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand/10 text-xs font-bold text-brand">5</span>
               <div class="rounded-md border bg-purple-500/10 px-3 py-1.5 text-xs font-medium text-purple-600 dark:text-purple-400">Inventory Service</div>
-              <svg class="h-4 w-4 shrink-0 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              <svg class="h-4 w-4 shrink-0 text-muted-foreground rotate-90 md:rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
               <div class="rounded-md border bg-card px-3 py-1.5 text-xs font-medium">inventory_db :5434</div>
             </div>
           </div>
